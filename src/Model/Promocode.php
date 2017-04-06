@@ -9,10 +9,11 @@ class Promocode extends Model
 {
     /**
      * Indicates if the model should be timestamped.
+     * We want to know, when the code was used. So, we need updated_at field.
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +24,7 @@ class Promocode extends Model
         'code',
         'reward',
         'is_used',
+        'expired_at',
     ];
 
     /**
@@ -33,6 +35,18 @@ class Promocode extends Model
     protected $casts = [
         'is_used' => 'boolean',
     ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'expired_at',
+    ];
+
 
     /**
      * Promocode constructor.

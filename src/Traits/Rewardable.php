@@ -4,6 +4,7 @@ namespace Gabievi\Promocodes\Traits;
 
 use Gabievi\Promocodes\Facades\Promocodes;
 use Gabievi\Promocodes\Model\Promocode;
+use Carbon\Carbon;
 
 trait Rewardable
 {
@@ -11,19 +12,21 @@ trait Rewardable
      * Create promocodes for current model.
      *
      * @param int  $amount
-     * @param null $reward
+     * @param double $reward
+     * @param Carbon $expired_at
      *
      * @return mixed
      */
-    public function createCode($amount = 1, $reward = null)
+    public function createCode($amount = 1, $reward = null, $expired_at = null)
     {
         $records = [];
 
         // loop though each promocodes required
         foreach (Promocodes::output($amount) as $code) {
             $records[] = new Promocode([
-                'code'   => $code,
-                'reward' => $reward,
+                'code'       => $code,
+                'reward'     => $reward,
+                'expired_at' => $expired_at,
             ]);
         }
 
@@ -54,6 +57,16 @@ trait Rewardable
             if (!is_null($promocode->user) && $promocode->user->id !== $this->attributes['id']) {
 
                 // callback function with false value
+                if (is_callable($callback)) {
+                    $callback(false);
+                }
+
+                return false;
+            }
+
+            if ($promocode->isExpired()) {
+                // cannot apply code, because it's already expired
+
                 if (is_callable($callback)) {
                     $callback(false);
                 }

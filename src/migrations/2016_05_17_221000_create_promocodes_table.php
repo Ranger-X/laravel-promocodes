@@ -20,8 +20,12 @@ class CreatePromocodesTable extends Migration
             $table->string('code', 32)->unique();
             $table->double('reward', 10, 2)->nullable();
             $table->boolean('is_used')->default(false);
+            $table->dateTime('expired_at')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->index('is_used');
+            $table->index('expired_at');
         });
     }
 
