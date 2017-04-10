@@ -3,6 +3,7 @@
 namespace Gabievi\Promocodes;
 
 use Gabievi\Promocodes\Model\Promocode;
+use Carbon\Carbon;
 
 class Promocodes
 {
@@ -140,6 +141,7 @@ class Promocodes
     public function create($amount = 1, $reward = null, $expired_at = null)
     {
         $records = [];
+        $now = Carbon::now('utc');
 
         // loop though each promocodes required
         foreach ($this->output($amount) as $code) {
@@ -147,11 +149,13 @@ class Promocodes
                 'code'       => $code,
                 'reward'     => $reward,
                 'expired_at' => $expired_at,
+                'created_at' => $now,
+                'updated_at' => $now,
             ];
         }
 
         // check for insertion of record
-        if (Promocode::createMany($records)) {
+        if (Promocode::insert($records)) {
             return collect($records);
         }
 
