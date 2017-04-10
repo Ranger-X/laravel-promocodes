@@ -189,7 +189,8 @@ class Promocodes
             return $record->expired_at ? $record->expired_at->isPast() : false;
         }
 
-        return false;
+        // if promo code does not exists, return as it's expired
+        return true;
     }
 
     /**
