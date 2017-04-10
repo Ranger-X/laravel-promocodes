@@ -151,7 +151,7 @@ class Promocodes
         }
 
         // check for insertion of record
-        if (Promocode::insert($records)) {
+        if (Promocode::createMany($records)) {
             return collect($records);
         }
 
