@@ -3,6 +3,7 @@
 namespace Gabievi\Promocodes\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Promocode extends Model
 {
@@ -66,7 +67,14 @@ class Promocode extends Model
      */
     public function foreign()
     {
-        return config('promocodes.foreign_model') ? $this->belongsTo(config('promocodes.foreign_model')) : null;
+        $foreignModel = config('promocodes.foreign_model');
+
+        if (!$foreignModel) return null;
+
+        // get a class name in short form (without namespace)
+        $foreignClass = substr($foreignModel, strrpos($foreignModel, '\\') + 1);
+
+        return  $this->belongsTo($foreignModel,Str::snake($foreignClass) . '_id');
     }
 
     /**
