@@ -3,7 +3,6 @@
 namespace Gabievi\Promocodes;
 
 use Gabievi\Promocodes\Model\Promocode;
-use Carbon\Carbon;
 
 class Promocodes
 {
@@ -185,8 +184,7 @@ class Promocodes
         if ($promocode->exists()) {
             $record = $promocode->first();
 
-            // check with Carbon's isPast() method
-            return $record->expired_at ? $record->expired_at->isPast() : false;
+            return $record->isExpired();
         }
 
         // if promo code does not exists, return as it's expired

@@ -70,6 +70,18 @@ class Promocode extends Model
     }
 
     /**
+     * Returns true, if this promo code is expired
+     *
+     * @return bool
+     */
+    public function isExpired()
+    {
+        // check with Carbon's isPast() method
+        return $this->expired_at ? $this->expired_at->isPast() : false;
+    }
+
+
+    /**
      * Query builder to find promocode using code.
      *
      * @param $query
