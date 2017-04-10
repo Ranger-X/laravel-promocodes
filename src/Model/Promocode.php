@@ -2,7 +2,6 @@
 
 namespace Gabievi\Promocodes\Model;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Promocode extends Model
@@ -61,13 +60,13 @@ class Promocode extends Model
     }
 
     /**
-     * Get the user who owns the promocode.
+     * Get the foreign model which owns the promocode.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function foreign()
     {
-        return $this->belongsTo(User::class);
+        return config('promocodes.foreign_model') ? $this->belongsTo(config('promocodes.foreign_model')) : null;
     }
 
     /**

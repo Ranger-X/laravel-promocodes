@@ -10,6 +10,12 @@ return [
     'table' => 'promocodes',
 
     /*
+     * Foreign class name
+     * Can be null if you do not want relationship
+     */
+    'foreign_model' => \App\User::class,
+
+    /*
      * List of characters, promo code generated from.
      * We have removed 1 (one) and I because with some
      * fonts you can't find deference between them

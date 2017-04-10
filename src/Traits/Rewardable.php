@@ -54,7 +54,7 @@ trait Rewardable
         if (!is_null($promocode)) {
 
             //
-            if (!is_null($promocode->user) && $promocode->user->id !== $this->attributes['id']) {
+            if (!is_null($promocode->foreign) && $promocode->foreign->id !== $this->attributes['id']) {
 
                 // callback function with false value
                 if (is_callable($callback)) {

@@ -134,18 +134,20 @@ class Promocodes
      *
      * @param int  $amount
      * @param null $reward
+     * @param Carbon $expired_at
      *
      * @return static
      */
-    public function create($amount = 1, $reward = null)
+    public function create($amount = 1, $reward = null, $expired_at = null)
     {
         $records = [];
 
         // loop though each promocodes required
         foreach ($this->output($amount) as $code) {
             $records[] = [
-                'code'   => $code,
-                'reward' => $reward,
+                'code'       => $code,
+                'reward'     => $reward,
+                'expired_at' => $expired_at,
             ];
         }
 
