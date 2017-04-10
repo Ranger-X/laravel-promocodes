@@ -15,6 +15,7 @@ class CreatePromocodesTable extends Migration
     {
         Schema::create(config('promocodes.table', 'promocodes'), function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
 
             $foreignModel = config('promocodes.foreign_model');
             if ($foreignModel)
